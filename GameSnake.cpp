@@ -42,26 +42,29 @@ void Draw() {
 
     // рисует границы
 
-    for (int i = 0; i < shirina; ++i) //верхние и нижние границы
+    for (int i = 0; i < shirina + 1; ++i) //верхние и нижние границы
 
-        cout << "*" << endl;
+        cout << "*"; 
+    cout << endl;
 
     for (int i = 0; i < visota; ++i) { //боковые границы
 
-        for (int j = 0; j < shirina; ++i) {
+        for (int j = 0; j < shirina; ++j) {
 
-            if (j == 0 || j == shirina; - 1)
+            if (j == 0 || j == shirina - 1) //-1 потому что один шаг уже пройден, а старт должен быть с нуля
 
                 cout << "*";
-            cout << " "; //-1 потому что один шаг уже пройден, а старт должен быть с нуля
+            cout << " "; 
         }
 
+        cout << endl;
         
     } 
 
-    for (int i = 0; i < shirina; ++i)
+    for (int i = 0; i < shirina + 1; ++i)
 
-        cout << "*" << endl;
+        cout << "*";
+        cout << endl;
 
 
 
@@ -84,7 +87,7 @@ int main()
 
     Setup(); // вызов для настройки игры при включении
 
-    while (!GameOver = false) { // пока игра не завершена
+    while (!GameOver) { // пока игра не завершена
     
         Draw();
         vvod();
