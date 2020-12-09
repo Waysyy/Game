@@ -38,6 +38,33 @@ void Setup() {
 
 void Draw() {
 
+    system("cls");
+
+    // рисует границы
+
+    for (int i = 0; i < shirina; ++i) //верхние и нижние границы
+
+        cout << "*" << endl;
+
+    for (int i = 0; i < visota; ++i) { //боковые границы
+
+        for (int j = 0; j < shirina; ++i) {
+
+            if (j == 0 || j == shirina; - 1)
+
+                cout << "*";
+            cout << " "; //-1 потому что один шаг уже пройден, а старт должен быть с нуля
+        }
+
+        
+    } 
+
+    for (int i = 0; i < shirina; ++i)
+
+        cout << "*" << endl;
+
+
+
 }
 
 // Действия пользователя
