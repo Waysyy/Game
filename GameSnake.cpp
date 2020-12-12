@@ -1,6 +1,10 @@
 ﻿// GameSnake
+ 
+//РАЗОБРАТЬСЯ В ПРОКРУТКОЙ КАРТЫ
 
 #include <iostream>
+#include <Windows.h> //для замедления
+#include <conio.h> //библиотека позволяющая вводить/выводить
 
 using namespace std;
 
@@ -13,7 +17,7 @@ int score, x, y, fruitX, fruitY; //x и y - координаты
 
 //движения
 
-enum dvij { stop = 0, left, right, up, down};
+enum dvij { stop = 0, UP, DOWN, RIGHT, LEFT}; //пришлось написать капсом, т.к. в "using namespace std" уже есть right и left 
 dvij dv; //управление движениями
 
 // Изначальные установки
@@ -24,8 +28,8 @@ void Setup() {
 
       dv = stop; //изначально стоит на месте
 
-          x = shirina / 2;    // изначальные координаты
-          y = visota / 2;
+          x = shirina / 2 - 1;    // изначальные координаты
+          y = visota / 2 - 1;
 
              fruitX = rand() % shirina; // рандомное положение фрукта  
              fruitY = rand() % visota;
@@ -52,9 +56,16 @@ void Draw() {
         for (int j = 0; j < shirina; ++j) {
 
             if (j == 0 || j == shirina - 1) //-1 потому что один шаг уже пройден, а старт должен быть с нуля
-
                 cout << "*";
-            cout << " "; 
+
+            if (i == y && j == x) // координаты для змейки (проверка координат)
+                cout << "@";
+
+            else if (i == fruitY && j == fruitX)
+                cout << "$";
+
+            else
+                cout << " "; 
         }
 
         cout << endl;
@@ -64,6 +75,7 @@ void Draw() {
     for (int i = 0; i < shirina + 1; ++i)
 
         cout << "*";
+
         cout << endl;
 
 
@@ -74,12 +86,62 @@ void Draw() {
 
 void vvod() {
 
+    if (_kbhit ()) { //отследить движения пользователя
+        switch (_getch ()) //позволяет отслеживать нажатия
+        {
+        case 'w':
+            dv = UP;
+
+            break;
+        case 's':
+            dv = DOWN;
+
+            break;
+
+        case 'd':
+            dv = RIGHT;
+
+            break;
+
+        case 'a':
+            dv = LEFT;
+
+            break;
+
+        case 'x':
+            GameOver = true;
+
+            break;
+        }
+
+
+    }
+
 }
 
-// Логика игры
+// проверка направления движения змейки
 
 void logic() {
 
+    switch (dv)
+    {
+    case LEFT:
+        --x; //за счет уменьшения значения координаты происходит движение
+        break;
+    case RIGHT:
+        ++x;
+        break;
+    case UP:
+        --y;
+        break;
+    case DOWN:
+        ++y;
+        break;
+    
+    }
+
+    if (x > shirina || x < 0 || y > visota || y < 0) //если змея выйдет за пределы карты - игра окончена
+        GameOver = true;
 }
 
 int main()
@@ -92,7 +154,7 @@ int main()
         Draw();
         vvod();
         logic();
-
+        Sleep(1000); //замедляет
     }
     return 0;
 }
