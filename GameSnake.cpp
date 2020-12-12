@@ -29,7 +29,7 @@ void Setup() {
       dv = stop; //изначально стоит на месте
 
           x = shirina / 2 - 1;    // изначальные координаты
-          y = visota / 2 - 1;
+          y = visota / 2 - 1; // добавила -1, т.к. змея сдвинулась с начальной точки после изменения границ карты
 
              fruitX = rand() % shirina; // рандомное положение фрукта  
              fruitY = rand() % visota;
@@ -77,6 +77,8 @@ void Draw() {
         cout << "*";
 
         cout << endl;
+
+        cout << "score:  " << score << endl;
 
 
 
@@ -142,6 +144,11 @@ void logic() {
 
     if (x > shirina || x < 0 || y > visota || y < 0) //если змея выйдет за пределы карты - игра окончена
         GameOver = true;
+    if (x == fruitX && y == fruitY) {
+        score = score + 10;
+        fruitX = rand() % shirina; // меняем положение фрукта, после съедения  
+        fruitY = rand() % visota;
+    }
 }
 
 int main()
@@ -156,6 +163,20 @@ int main()
         logic();
         Sleep(1000); //замедляет
     }
+    system("cls");
+    cout << " #####      ##       ##   ##   #######\n";
+    cout << "#         #    #   #   # #  #  #\n";
+    cout << "#  ##     # ## #   #    #   #  #######\n";
+    cout << "#    #    #    #   #        #  #\n";
+    cout << "#####     #    #   #        #  #######\n";
+    cout << "\n";
+
+    cout << "  #####   #        #    #######   ####\n";
+    cout << " #     #   #      #     #         #    #\n";
+    cout << " #     #    #    #      #######   ####\n";
+    cout << " #     #     #  #       #         ###\n";
+    cout << "  #####       ##        #######   #   #\n";
+    system("pause");
     return 0;
 }
 
