@@ -15,6 +15,9 @@ const int visota = 50;
 
 int score, x, y, fruitX, fruitY; //x и y - координаты
 
+int tailX[100], tailY[100]; //перемещение хвоста
+int ntail; // количесвто элементов в хвосте
+
 //движения
 
 enum dvij { stop = 0, UP, DOWN, RIGHT, LEFT}; //пришлось написать капсом, т.к. в "using namespace std" уже есть right и left 
@@ -64,8 +67,25 @@ void Draw() {
             else if (i == fruitY && j == fruitX)
                 cout << "$";
 
-            else
-                cout << " "; 
+            else {
+
+                bool vivod = false; // чтобы не ставил пробелы
+
+                for (int k = 0; 0 < ntail; ++k) { //отрисовка хвоста
+                
+                    if (tailX[k] == j && tailY[k] == i) {
+                    
+                        vivod = true;
+                    
+                    }
+
+                        cout << "@";
+
+                }
+
+                if (!vivod)
+                cout << " ";
+             }
         }
 
         cout << endl;
@@ -125,6 +145,26 @@ void vvod() {
 
 void logic() {
 
+    int predX = tailX[0]; //во время игры значение будет меняться (предыдущее позиция по Х)(первый элемент хвоста)
+    int predY = tailY[0];
+    int pred2X, pred2Y; // переменные в котороые мы помещаем следующие элементы хвоста
+
+    tailX[0] = x; // первый элемент в хвосте = координате х
+    tailY[0] = y;
+
+    for (int i = 1; i < ntail; ++i) { // i идет до кол-ва элементов в хвосте
+    
+        pred2X = tailX[i]; 
+        pred2Y = tailY[i];
+
+        tailX[i] = predX; // помещаем первую координату
+        tailY[i] = predY;
+
+        predX = pred2X;
+        predY = pred2Y;
+
+    }
+
     switch (dv)
     {
     case LEFT:
@@ -144,15 +184,32 @@ void logic() {
 
     if (x > shirina || x < 0 || y > visota || y < 0) //если змея выйдет за пределы карты - игра окончена
         GameOver = true;
+
+    for (int i = 0; i < ntail; ++i) { //проверяем не съела ли змея хвост, делаем это в цикле, потому что элементов много
+    
+        if (tailX[i] == x && tailY[i] == y)
+
+            GameOver = true;
+
+    }
+
     if (x == fruitX && y == fruitY) {
         score = score + 10;
         fruitX = rand() % shirina; // меняем положение фрукта, после съедения  
         fruitY = rand() % visota;
+        ++ntail; //хвост растет с поеданием фрукта
     }
 }
 
 int main()
 {
+    cout << "  #####   #      #    ##    #      #  #######\n";
+    cout << " #     #  # #    #  #    #  #    #    #\n";
+    cout << "  # #     #   #  #  # ## #  # # #     #######\n";
+    cout << "#     #   #    # #  #    #  #    #    #\n";
+    cout << " #####    #      #  #    #  #     #   #######\n";
+
+    system("pause");
 
     Setup(); // вызов для настройки игры при включении
 
