@@ -10,8 +10,8 @@ using namespace std;
 
 bool GameOver; // изначально false
 
-const int shirina = 50;
-const int visota = 50;
+const int shirina = 100;
+const int visota = 20;
 
 int score, x, y, fruitX, fruitY; //x и y - координаты
 
@@ -52,6 +52,7 @@ void Draw() {
     for (int i = 0; i < shirina + 1; ++i) //верхние и нижние границы
 
         cout << "*"; 
+
     cout << endl;
 
     for (int i = 0; i < visota; ++i) { //боковые границы
@@ -71,15 +72,15 @@ void Draw() {
 
                 bool vivod = false; // чтобы не ставил пробелы
 
-                for (int k = 0; 0 < ntail; ++k) { //отрисовка хвоста
+                for (int k = 0; k < ntail; ++k) { //отрисовка хвоста
                 
                     if (tailX[k] == j && tailY[k] == i) {
                     
                         vivod = true;
-                    
+                        cout << "o";
                     }
 
-                        cout << "@";
+                    
 
                 }
 
@@ -98,7 +99,7 @@ void Draw() {
 
         cout << endl;
 
-        cout << "score:  " << score << endl;
+        cout << "~~~ score:  " << score << "  ~~~" << endl;
 
 
 
@@ -218,7 +219,7 @@ int main()
         Draw();
         vvod();
         logic();
-        Sleep(1000); //замедляет
+        Sleep(100); //замедляет
     }
     system("cls");
     cout << " #####      ##       ##   ##   #######\n";
