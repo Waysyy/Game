@@ -204,6 +204,8 @@ void logic() {
 
 int main()
 {
+    system("color 02");
+
     cout << "  #####   #      #    ##    #      #  #######\n";
     cout << " #     #  # #    #  #    #  #    #    #\n";
     cout << "  # #     #   #  #  # ## #  # # #     #######\n";
